@@ -33,6 +33,10 @@ class CobaViewModel:ViewModel() {
 
     }
 
+    fun setStatus(pilihST:String){
+        _uiState.update {currentState -> currentState.copy(sex =  pilihST)}
+    }
+
     fun insertData(textNama: String,alt:String, textTlp: String, sex: String) {
         TODO("Not yet implemented")
     }

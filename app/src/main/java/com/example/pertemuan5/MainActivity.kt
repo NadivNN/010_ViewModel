@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pertemuan5.Data.DataForm
 import com.example.pertemuan5.Data.DataSource
 import com.example.pertemuan5.Data.DataSource.jenis
+import com.example.pertemuan5.Data.DataSource.status
 import com.example.pertemuan5.ui.theme.Pertemuan5Theme
 
 class MainActivity : ComponentActivity() {
@@ -72,6 +74,7 @@ fun TampilanLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(20.dp)
         ){
+            Text(text = "Create your account", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold)
             TampilanForm()
         }
     }
@@ -121,14 +124,15 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
 
 
     SelectJK(options = jenis.map { id -> context.resources.getString(id) },
-        onSelectionChanged = {
-            cobaViewModel.setJenisK(it)
-        })
+    onSelectionChanged = {
+        cobaViewModel.setJenisK(it)
+    })
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = {
             cobaViewModel.readData(textNama,textTlp,textAlt,dataclass.sex)
         }
-    ) {
+    )
+    {
         Text(
             text =stringResource(R.string.submit),
             fontSize = 16.sp
