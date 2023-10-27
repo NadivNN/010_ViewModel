@@ -85,6 +85,7 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
     var textNama by remember{ mutableStateOf("") }
     var textTlp by remember{ mutableStateOf("") }
     var textAlt by remember{ mutableStateOf("") }
+    var textEmail by remember{ mutableStateOf("") }
 
     val context = LocalContext.current
     val dataclass : DataForm
@@ -123,15 +124,27 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
     )
 
 
+
     SelectJK(options = jenis.map { id -> context.resources.getString(id) },
     onSelectionChanged = {
         cobaViewModel.setJenisK(it)
     })
-    Button(modifier = Modifier.fillMaxWidth(),
-        onClick = {
-            cobaViewModel.readData(textNama,textTlp,textAlt,dataclass.sex)
+    OutlinedTextField(
+        value = textEmail,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Emailnya")},
+        onValueChange ={
+            textEmail = it
         }
     )
+    Button(modifier = Modifier.fillMaxWidth(),
+        onClick = {
+            cobaViewModel.readData(textNama,textTlp,textAlt,textEmail,dataclass.sex)
+        }
+    )
+
     {
         Text(
             text =stringResource(R.string.submit),
@@ -147,10 +160,43 @@ fun TampilanForm(cobaViewModel: CobaViewModel = viewModel()){
 
 
     )
+
 }
 
 @Composable
 fun SelectJK(
+    options: List<String>,
+    onSelectionChanged:(String) -> Unit ={}
+){
+    var selectedValue by rememberSaveable{ mutableStateOf("") }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        options.forEach { item ->
+            Row (
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(item)
+            }
+        }
+    }
+}
+
+@Composable
+fun SelectST(
     options: List<String>,
     onSelectionChanged:(String) -> Unit ={}
 ){

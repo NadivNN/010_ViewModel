@@ -19,14 +19,16 @@ class CobaViewModel:ViewModel() {
         private set
     var jenisKL : String by mutableStateOf("")
         private set
+    var emailUsr : String by mutableStateOf("")
     private val _uiState = MutableStateFlow(DataForm())
     val uiState: StateFlow<DataForm> = _uiState.asStateFlow()
 
-    fun readData(nm:String,tlp:String,alt:String, jk:String){
+    fun readData(nm:String,tlp:String,alt:String, jk:String, email:String){
         namaUsr=nm;
         noTlp=tlp;
         alamatUsr=alt;
         jenisKL=jk;
+        emailUsr=email;
     }
     fun setJenisK(pilihJK:String){
         _uiState.update {currentState -> currentState.copy(sex = pilihJK)}
@@ -34,10 +36,10 @@ class CobaViewModel:ViewModel() {
     }
 
     fun setStatus(pilihST:String){
-        _uiState.update {currentState -> currentState.copy(sex =  pilihST)}
+        _uiState.update {currentState -> currentState.copy(stat =  pilihST)}
     }
 
-    fun insertData(textNama: String,alt:String, textTlp: String, sex: String) {
+    fun insertData(textNama: String,alt:String, textTlp: String, sex: String, textem:String) {
         TODO("Not yet implemented")
     }
 }
